@@ -1,0 +1,31 @@
+
+// You shouldn't need to change anything about this routine
+char *MakeSha256( char *salt,  char *pwd_guess) {
+   char command[1024];
+   char result[1024];
+   FILE *file_result;
+
+   // create the shell command to use
+   // for example: 
+   // BSH:Saru> openssl passwd -5 -salt foobar mypwd
+   // $5$foobar$6WS2Np/pNB83FbxzS7a5fGaJO1PMtdldjMSWCiBio05
+   snprintf(command, sizeof(command), "openssl passwd -5 -salt '%s' '%s'\n", salt, pwd_guess);
+
+   if (debug>1)
+      fprintf(stderr,"Running command %s\n", command);
+
+   // run the shell command
+   file_result = popen(command,"r");
+
+   fgets(result, sizeof(result), file_result);
+
+   pclose(file_result);
+
+   // printf("Digest: '%s'", result);
+   char *ptr = result;
+   ptr=index(result+1,'$');   // find the second $
+   ptr=1+index(ptr+1,'$');   // find the third $
+   // printf("Hash: '%s'", ptr);
+
+   return(strdup(ptr));
+}
