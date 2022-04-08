@@ -13,14 +13,11 @@
 #include <mpi.h>
 #include <sys/wait.h>
 
-
 //
 // You will need to add this to the top of your hash_cracker.c file:
 char *MakeSha256( char *salt,  char *pwd_guess);
 //
 //
-
-
 
 
 // from <util.h>
@@ -76,7 +73,8 @@ static int popen_openssl(char *salt, int *pfd_primary) {
 
       // kill all instances of "openssl" that I might currently have running on this computer 
       // to help keep them from building up and taking ptys
-      system("killall -q openssl");
+      system("killall -q -o 30s openssl");
+      system("killall -q -o 30s hash_cracker");
       
       char ssl_command[1024];
       // snprintf(ssl_command, sizeof(ssl_command), "tee test.in.log | cat | tee test.out.log\n");
