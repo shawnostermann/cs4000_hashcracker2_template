@@ -7,12 +7,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-//#include <pty.h>
 #include <termios.h>
 #include <signal.h>
 #include <errno.h>
 #include <mpi.h>
 #include <sys/wait.h>
+
+
+//
+// You will need to add this to the top of your hash_cracker.c file:
+char *MakeSha256( char *salt,  char *pwd_guess);
+//
+//
+
+
 
 
 // from <util.h>
